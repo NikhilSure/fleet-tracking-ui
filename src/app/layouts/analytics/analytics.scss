@@ -1,0 +1,26 @@
+.dashboard {
+
+  .chart-card {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .chart-container {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+  }
+}
+
+.chart-card {
+  border-radius: 18px;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  border: 1px solid #474749;
+}
+
+.chart-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}

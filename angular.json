@@ -30,7 +30,10 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ]
           },
           "configurations": {

@@ -1,0 +1,53 @@
+<div
+  class="surface-card dashboard-kpi border-round-2xl p-3 relative overflow-hidden"
+>
+
+  <!-- Top Section -->
+  <div class="flex justify-content-between align-items-start mb-3">
+
+    <div>
+      <div class="text-500 text-xs font-semibold uppercase tracking-wider mb-2">
+        {{ title }}
+      </div>
+
+      <div class="text-2xl font-bold text-900">
+        {{ value }}
+      </div>
+    </div>
+
+    <div
+      class="icon-wrapper flex align-items-center justify-content-center"
+      [ngClass]="'bg-' + color + '-100'"
+    >
+      <i
+        class="text-lg"
+        [ngClass]="[icon, 'text-' + color + '-600']"
+      ></i>
+    </div>
+
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="flex justify-content-between align-items-center">
+
+    <div
+      class="flex align-items-center gap-1 text-xs font-medium"
+      [ngClass]="'text-' + color + '-600'"
+    >
+      <i class="pi pi-arrow-up text-xs"></i>
+      <span>+12.5%</span>
+    </div>
+
+    <div class="text-500 text-xs">
+      Updated 2 min ago
+    </div>
+
+  </div>
+
+  <!-- Accent Line -->
+  <div
+    class="card-accent"
+    [ngClass]="'bg-' + color + '-500'"
+  ></div>
+
+</div>

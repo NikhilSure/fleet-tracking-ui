@@ -1,0 +1,103 @@
+.dashboard-container {
+  background: #0a0a0a;
+  color: #e5e7eb;
+}
+
+/* MAIN PANEL (Threads style = soft, minimal, no hard borders) */
+.panel {
+  background: rgba(20, 20, 20, 0.75);
+  border-radius: 22px;
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+}
+
+/* HEADER */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f3f4f6;
+}
+
+.panel-subtitle {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+/* LIVE DOT */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #22c55e;
+}
+
+/* FEED ITEM (Threads style card row) */
+.feed-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.03);
+
+  transition: 0.2s ease;
+}
+
+.feed-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ICON */
+.feed-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* TYPES */
+.feed-icon.danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.feed-icon.warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.feed-icon.info {
+  background: rgba(6, 182, 212, 0.15);
+  color: #22d3ee;
+}
+
+/* TEXT */
+.feed-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f9fafb;
+}
+
+.feed-subtitle {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* TIME */
+.feed-time {
+  font-size: 0.75rem;
+  color: #6b7280;
+}

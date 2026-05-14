@@ -1,0 +1,69 @@
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Floating controls on map corner */
+.map-controls {
+  position: absolute;;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+
+  width: 220px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Each row */
+.control-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  margin-bottom: 8px;
+
+  &:hover {
+    background: #6b6a6a;
+  }
+
+  i {
+    font-size: 1rem;
+    color: #3b82f6;
+    margin-right: 10px;
+  }
+
+  span {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+::ng-deep .vehicle-popup {
+  min-width: 220px;
+  font-family: Inter, sans-serif;
+;
+
+  .popup-header {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #8b5cf6;
+  }
+
+  .popup-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+}

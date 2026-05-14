@@ -1,0 +1,27 @@
+<div class="dashboard surface-ground min-h-screen p-2">
+
+  <div class="grid">
+
+    @for (card of dashboardCards; track card.title) {
+
+      <div [class]="card.col">
+        <div class="surface-card border-round-xl shadow-2 chart-card">
+
+          <div class="text-sm p-2">
+            {{ card.title }}
+          </div>
+
+          <div
+            echarts
+            [options]="card.chart"
+            class="chart-container"
+          ></div>
+
+        </div>
+      </div>
+
+    }
+
+  </div>
+
+</div>

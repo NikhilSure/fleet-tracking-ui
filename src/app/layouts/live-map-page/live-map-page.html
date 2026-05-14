@@ -1,0 +1,42 @@
+<div id="map" class="map-container">
+  <!-- Floating Map Controls -->
+  <div class="map-controls text-sm  surface-card shadow-3 border-round-xl p-2">
+    
+    <div class="control-item" (click)="setLayer('osm')">
+      <i class="pi pi-map"></i>
+      <span>Street</span>
+
+      <p-toggleSwitch 
+        [ngModel]="selectedLayer === 'osm'">
+      </p-toggleSwitch>
+    </div>
+
+    <div class="control-item" (click)="setLayer('satellite')">
+      <i class="pi pi-globe"></i>
+      <span>Satellite</span>
+
+      <p-toggleSwitch 
+        [ngModel]="selectedLayer === 'satellite'">
+      </p-toggleSwitch>
+    </div>
+
+     <div class="control-item" (click)="setLayer('dark')">
+      <i class="pi pi-globe"></i>
+      <span>Dark</span>
+
+      <p-toggleSwitch 
+        [ngModel]="selectedLayer === 'dark'">
+      </p-toggleSwitch>
+    </div>
+
+    <div class="control-item" (click)="setLayer('traffic')">
+      <i class="pi pi-car"></i>
+      <span>Traffic</span>
+
+      <p-toggleSwitch 
+        [ngModel]="selectedLayer === 'traffic'">
+      </p-toggleSwitch>
+    </div>
+
+  </div>
+</div>
