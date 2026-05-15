@@ -4,21 +4,23 @@
   <div class="grid mb-2">
 
     @for (kpi of kpis; track kpi.title) {
-    <div class="col-12 md:col-6 xl:col-2 ">
+    <div class="col-12 md:col-6 xl:col-3 ">
       <app-kpi-card [title]="kpi.title" [value]="kpi.value" [color]="kpi.color" [icon]="kpi.icon">
       </app-kpi-card>
     </div>
-
     }
+
+
 
   </div>
 
   <!-- MAIN GRID -->
   <div class="grid">
 
-    <div class="col-12 xl:col-8 border-round-lg overflow-hidden border-1 border-gray-800">
-      <!-- <app-live-map-page></app-live-map-page> -->
+    <div class="col-12 xl:col-9 border-round-lg overflow-hidden border-1 map">
+      <app-live-map-page></app-live-map-page>
       </div>
+
     <!-- ANALYTICS -->
     <!-- <div class="col-12 xl:col-8">
 
@@ -47,24 +49,9 @@
     </div> -->
 
     <!-- ALERT FEED -->
-    <div class="col-12 xl:col-4">
+    <div class="col-12 xl:col-3">
 
       <div class="panel threads-panel">
-
-        <div class="panel-header mb-4">
-
-          <div>
-            <div class="panel-title">
-              Live Feed
-            </div>
-            <div class="panel-subtitle">
-              Recent fleet events
-            </div>
-          </div>
-
-          <span class="live-dot"></span>
-
-        </div>
 
         <div class="flex flex-column gap-2">
 
@@ -108,24 +95,7 @@
 
   <div class="grid">
       <div class="col-12 ">
-
       <div class="panel threads-panel">
-
-        <div class="panel-header mb-4">
-
-          <div>
-            <div class="panel-title">
-              Fleet Analytics
-            </div>
-            <div class="panel-subtitle">
-              Real-time fleet insights
-            </div>
-          </div>
-
-          <button pButton type="button" icon="pi pi-refresh" class="p-button-text p-button-rounded text-gray-300">
-          </button>
-
-        </div>
 
         <app-analytics></app-analytics>
 

@@ -6,7 +6,8 @@
 
 /* Floating controls on map corner */
 .map-controls {
-  position: absolute;;
+  position: absolute;
+  ;
   top: 16px;
   left: 16px;
   z-index: 1000;
@@ -50,7 +51,7 @@
 ::ng-deep .vehicle-popup {
   min-width: 220px;
   font-family: Inter, sans-serif;
-;
+  ;
 
   .popup-header {
     font-size: 16px;
@@ -64,6 +65,167 @@
     justify-content: space-between;
     margin-bottom: 8px;
     font-size: 13px;
+  }
+
+}
+
+
+
+
+
+.live-status-bar {
+
+  position: absolute;
+  ;
+  right: 1px;
+  z-index: 1000;
+
+  width: 400px;
+
+  padding: 0.55rem 0.9rem;
+
+  margin-bottom: 0.75rem;
+
+  border-radius: 14px;
+
+  background:
+    rgba(15, 15, 20, 0.88);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(12px);
+
+}
+
+.live-text {
+
+  color: #22c55e;
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12rem;
+
+}
+
+
+.fleet-controls {
+
+  position: absolute;
+
+  bottom: 1rem;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 1000;
+
+  padding: 0.5rem 0.7rem;
+
+  border-radius: 18px;
+
+  background:
+    rgba(12,12,18,0.88);
+
+  backdrop-filter: blur(16px);
+
+  border:
+    1px solid rgba(255,255,255,0.05);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35);
+
+}
+
+.live-meta {
+
+  color: #94a3b8;
+
+  font-size: 0.72rem;
+
+}
+
+.divider {
+
+  width: 3px;
+
+  height: 3px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.22);
+
+}
+
+.pulse-dot {
+
+  width: 8px;
+
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  position: relative;
+
+  box-shadow:
+    0 0 6px #22c55e;
+
+  animation:
+    pulse 1.5s infinite;
+
+}
+
+.pulse-dot::after {
+
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 50%;
+
+  background:
+    rgba(34, 197, 94, 0.45);
+
+  animation:
+    ripple 1.5s infinite;
+
+}
+
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+@keyframes ripple {
+
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
   }
 
 }

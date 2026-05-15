@@ -1,50 +1,62 @@
 <div
-  class="surface-card dashboard-kpi border-round-2xl p-3 relative overflow-hidden"
+  class="dashboard-kpi flex flex-column justify-content-between"
 >
 
-  <!-- Top Section -->
-  <div class="flex justify-content-between align-items-start mb-3">
+  <!-- TOP -->
 
-    <div>
-      <div class="text-500 text-xs font-semibold uppercase tracking-wider mb-2">
+  <div class="flex align-items-start justify-content-between">
+
+    <div class="flex flex-column gap-1">
+
+      <span class="kpi-title">
         {{ title }}
-      </div>
+      </span>
 
-      <div class="text-2xl font-bold text-900">
+      <span class="kpi-value">
         {{ value }}
-      </div>
+      </span>
+
     </div>
 
     <div
       class="icon-wrapper flex align-items-center justify-content-center"
       [ngClass]="'bg-' + color + '-100'"
     >
+
       <i
-        class="text-lg"
-        [ngClass]="[icon, 'text-' + color + '-600']"
+        [ngClass]="[
+          icon,
+          'text-' + color + '-500'
+        ]"
       ></i>
+
     </div>
 
   </div>
 
-  <!-- Bottom Section -->
-  <div class="flex justify-content-between align-items-center">
+  <!-- BOTTOM -->
+
+  <div
+    class="flex align-items-center justify-content-between mt-2"
+  >
 
     <div
-      class="flex align-items-center gap-1 text-xs font-medium"
-      [ngClass]="'text-' + color + '-600'"
+      class="kpi-growth flex align-items-center gap-1"
+      [ngClass]="'text-' + color + '-400'"
     >
+
       <i class="pi pi-arrow-up text-xs"></i>
-      <span>+12.5%</span>
+
+      <span>12.5%</span>
+
     </div>
 
-    <div class="text-500 text-xs">
-      Updated 2 min ago
-    </div>
+    <span class="kpi-updated">
+      Live
+    </span>
 
   </div>
 
-  <!-- Accent Line -->
   <div
     class="card-accent"
     [ngClass]="'bg-' + color + '-500'"

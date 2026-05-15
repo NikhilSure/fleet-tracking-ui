@@ -3,8 +3,10 @@ import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 
 import 'leaflet-routing-machine';
+import 'leaflet-rotatedmarker';
 
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ButtonModule } from 'primeng/button';
 
 interface VehicleLocation {
   vehicleId: string;
@@ -20,7 +22,8 @@ interface VehicleLocation {
   standalone: true,
   imports: [
     FormsModule,
-    ToggleSwitchModule
+    ToggleSwitchModule,
+    ButtonModule
   ],
   templateUrl: './live-map-page.html',
   styleUrl: './live-map-page.scss',
@@ -40,6 +43,8 @@ export class LiveMapPage {
 
   private routeLines =
     new Map<string, L.Polyline>();
+
+  private trackingInterval: any = null;
 
   private routeInfo:
     Record<string, {
@@ -116,14 +121,21 @@ export class LiveMapPage {
 
   private startVehicleTracking(): void {
 
+    if (this.trackingInterval) return;
     this.loadVehicles();
 
-    setInterval(() => {
+    this.trackingInterval = setInterval(() => {
 
       this.loadVehicles();
 
     }, 4000);
 
+  }
+
+
+  stopTracking(): void {
+    clearInterval(this.trackingInterval);
+    this.trackingInterval = null;
   }
 
   private loadVehicles(): void {
@@ -233,6 +245,10 @@ export class LiveMapPage {
         lng:
           previous.lng +
           (Math.random() - 0.5) * 0.002,
+        heading:
+          (previous.heading +
+            (Math.random() - 0.5) * 20) %
+          360,
 
         timestamp: Date.now()
 
@@ -314,7 +330,8 @@ export class LiveMapPage {
           {
             color: '#8b5cf6',
             weight: 5,
-            opacity: 0.9
+            opacity: 0.9,
+            smoothFactor: 2,
           }
         ).addTo(this.map);
 
@@ -433,10 +450,14 @@ export class LiveMapPage {
         vehicle.lng
       ],
       {
-        icon: vehicleIcon
-      }
+        icon: vehicleIcon,
+        rotationAngle: vehicle.heading
+      } as any
     );
 
+    (marker as any).setRotationAngle(vehicle.heading);
+
+    // (marker as any).setRotationAngle(vehicle.heading);
     marker.addTo(this.map);
 
     this.markers.set(
@@ -507,6 +528,58 @@ export class LiveMapPage {
       'BBox:',
       bounds.toBBoxString()
     );
+
+  }
+
+
+  startTracking() {
+
+  }
+
+  fitAllVehicles(): void {
+
+    const bounds: L.LatLng[] = [];
+
+    this.markers.forEach(marker => {
+
+      bounds.push(marker.getLatLng());
+
+    });
+
+    if (bounds.length) {
+
+      this.map.fitBounds(L.latLngBounds(bounds), {
+        padding: [50, 50]
+      });
+
+    }
+
+  }
+
+
+  clearTrails(): void {
+
+    this.routeLines.forEach(polyline => {
+
+      this.map.removeLayer(polyline);
+
+    });
+
+    this.routeLines.clear();
+
+    this.routeLines.clear();
+
+  }
+
+
+  resetRoutes(): void {
+
+    // Object.keys(this.routeIndexes)
+    //   .forEach(key => {
+
+    //     this.routeIndexes[key] = 0;
+
+    //   });
 
   }
 }

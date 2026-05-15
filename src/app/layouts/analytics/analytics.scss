@@ -1,15 +1,26 @@
 .dashboard {
 
   .chart-card {
-    height: 300px;
+    height: 230px;
     display: flex;
     flex-direction: column;
+    background:
+      linear-gradient(180deg,
+        rgba(25, 25, 30, 0.95),
+        rgba(15, 15, 20, 0.95));
+
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.4);
+
+    border:
+      1px solid rgba(255, 255, 255, 0.06);
   }
 
   .chart-container {
     flex: 1;
     width: 100%;
     min-height: 0;
+    height: auto;
   }
 }
 
@@ -22,5 +33,5 @@
 
 .chart-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }

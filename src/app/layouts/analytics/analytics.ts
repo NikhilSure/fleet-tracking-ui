@@ -217,7 +217,7 @@ export class Analytics {
   {
     title: 'Fleet Activity',
     chart: this.fleetActivityChart,
-    col: 'col-12 lg:col-8'
+    col: 'col-12 lg:col-4'
   },
   {
     title: 'Vehicle Status',
@@ -227,13 +227,13 @@ export class Analytics {
   {
     title: 'Alerts Trend',
     chart: this.alertsChart,
-    col: 'col-12 lg:col-6'
+    col: 'col-12 lg:col-4'
   },
-  {
-    title: 'Trip Analytics',
-    chart: this.tripChart,
-    col: 'col-12 lg:col-6'
-  }
+  // {
+  //   title: 'Trip Analytics',
+  //   chart: this.tripChart,
+  //   col: 'col-12 lg:col-4'
+  // }
 ];
 
 

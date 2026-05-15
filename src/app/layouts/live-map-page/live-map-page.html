@@ -1,42 +1,168 @@
 <div id="map" class="map-container">
   <!-- Floating Map Controls -->
-  <div class="map-controls text-sm  surface-card shadow-3 border-round-xl p-2">
-    
-    <div class="control-item" (click)="setLayer('osm')">
-      <i class="pi pi-map"></i>
+ <div
+  class="map-controls surface-card shadow-3 border-round-2xl p-2"
+>
+
+  <div
+    class="control-item flex align-items-center justify-content-between border-round-xl"
+    [class.active]="selectedLayer === 'osm'"
+    (click)="setLayer('osm')"
+  >
+
+    <div class="flex align-items-center gap-2">
+
+      <i class="pi pi-map text-blue-400"></i>
+
       <span>Street</span>
 
-      <p-toggleSwitch 
-        [ngModel]="selectedLayer === 'osm'">
-      </p-toggleSwitch>
     </div>
 
-    <div class="control-item" (click)="setLayer('satellite')">
-      <i class="pi pi-globe"></i>
-      <span>Satellite</span>
-
-      <p-toggleSwitch 
-        [ngModel]="selectedLayer === 'satellite'">
-      </p-toggleSwitch>
-    </div>
-
-     <div class="control-item" (click)="setLayer('dark')">
-      <i class="pi pi-globe"></i>
-      <span>Dark</span>
-
-      <p-toggleSwitch 
-        [ngModel]="selectedLayer === 'dark'">
-      </p-toggleSwitch>
-    </div>
-
-    <div class="control-item" (click)="setLayer('traffic')">
-      <i class="pi pi-car"></i>
-      <span>Traffic</span>
-
-      <p-toggleSwitch 
-        [ngModel]="selectedLayer === 'traffic'">
-      </p-toggleSwitch>
-    </div>
+    <p-toggleSwitch size="small"
+      [ngModel]="selectedLayer === 'osm'"
+    ></p-toggleSwitch>
 
   </div>
+
+  <div
+    class="control-item flex align-items-center justify-content-between border-round-xl"
+    [class.active]="selectedLayer === 'satellite'"
+    (click)="setLayer('satellite')"
+  >
+
+    <div class="flex align-items-center gap-2">
+
+      <i class="pi pi-globe text-green-400"></i>
+
+      <span>Satellite</span>
+
+    </div>
+
+    <p-toggleSwitch size="small"
+      [ngModel]="selectedLayer === 'satellite'"
+    ></p-toggleSwitch>
+
+  </div>
+
+  <div
+    class="control-item flex align-items-center justify-content-between border-round-xl"
+    [class.active]="selectedLayer === 'dark'"
+    (click)="setLayer('dark')"
+  >
+
+    <div class="flex align-items-center gap-2">
+
+      <i class="pi pi-moon text-purple-400"></i>
+
+      <span>Dark</span>
+
+    </div>
+
+    <p-toggleSwitch
+      [ngModel]="selectedLayer === 'dark'"
+    ></p-toggleSwitch>
+
+  </div>
+
+  <div
+    class="control-item flex align-items-center justify-content-between border-round-xl"
+    [class.active]="selectedLayer === 'traffic'"
+    (click)="setLayer('traffic')"
+  >
+
+    <div class="flex align-items-center gap-2">
+
+      <i class="pi pi-car text-yellow-400"></i>
+
+      <span>Traffic</span>
+
+    </div>
+
+    <p-toggleSwitch
+      [ngModel]="selectedLayer === 'traffic'"
+    ></p-toggleSwitch>
+
+  </div>
+
+</div>
+      <div
+  class="live-status-bar flex align-items-center justify-content-between flex-wrap gap-2"
+>
+
+  <div class="flex align-items-center gap-2">
+
+    <span class="pulse-dot"></span>
+
+    <span class="live-text">
+      LIVE
+    </span>
+
+  </div>
+
+  <div
+    class="flex align-items-center flex-wrap gap-2 live-meta"
+  >
+
+    <span>Kafka Connected</span>
+
+    <span class="divider"></span>
+
+    <span>95 Vehicles Streaming</span>
+
+    <span class="divider"></span>
+
+    <span>GPS: 0.8s ago</span>
+
+  </div>
+
+</div>
+
+
+
+<div
+  class="fleet-controls flex align-items-center gap-2"
+>
+
+  <button
+    pButton
+    type="button"
+    icon="pi pi-play"
+    class="p-button-sm p-button-success"
+    (click)="startTracking()"
+  ></button>
+
+  <button
+    pButton
+    type="button"
+    icon="pi pi-pause"
+    class="p-button-sm p-button-warning"
+    (click)="stopTracking()"
+  ></button>
+
+  <button
+    pButton
+    type="button"
+    icon="pi pi-search-plus"
+    class="p-button-sm p-button-info"
+    (click)="fitAllVehicles()"
+  ></button>
+
+  <button
+    pButton
+    type="button"
+    icon="pi pi-trash"
+    class="p-button-sm p-button-danger"
+    (click)="clearTrails()"
+  ></button>
+
+  <button
+    pButton
+    type="button"
+    icon="pi pi-refresh"
+    class="p-button-sm"
+    (click)="resetRoutes()"
+  ></button>
+
+</div>
+
 </div>
