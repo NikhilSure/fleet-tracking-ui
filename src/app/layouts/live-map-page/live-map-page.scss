@@ -1,115 +1,185 @@
 .map-container {
+
   position: relative;
+
   width: 100%;
+
   height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 1.5rem;
 }
 
-/* Floating controls on map corner */
+/* ===================================
+   FLOATING PANELS COMMON
+=================================== */
+
+.map-controls,
+.live-status-bar,
+.fleet-controls {
+
+  backdrop-filter: blur(18px);
+
+  background: rgba(10, 14, 24, 0.78);
+
+  border: 1px solid rgba(255,255,255,0.06);
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,0.35);
+}
+
+/* ===================================
+   MAP CONTROLS
+=================================== */
+
 .map-controls {
+
   position: absolute;
-  ;
-  top: 16px;
-  left: 16px;
+
+  // top: 1rem;
+
+  // left: 1rem;
+
   z-index: 1000;
 
-  width: 220px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.9);
+  width: 200px;
+
+  padding: 0.45rem;
+
+  border-radius: 1.25rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.35rem;
 }
 
-/* Each row */
 .control-item {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
-  padding: 10px 12px;
-  border-radius: 12px;
+  min-height: 42px;
+
+  padding: 0 0.8rem;
+
+  border-radius: 0.9rem;
 
   cursor: pointer;
+
   transition: all 0.2s ease;
 
-  margin-bottom: 8px;
+  border: 1px solid transparent;
+
+  background: transparent;
 
   &:hover {
-    background: #6b6a6a;
+
+    background: rgba(255,255,255,0.04);
   }
 
-  i {
-    font-size: 1rem;
-    color: #3b82f6;
-    margin-right: 10px;
+  &.active {
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(59,130,246,0.16),
+        rgba(139,92,246,0.14)
+      );
+
+    border-color:
+      rgba(99,102,241,0.25);
   }
 
   span {
-    flex: 1;
-    font-size: 14px;
+
+    color: #f8fafc;
+
+    font-size: 0.82rem;
+
     font-weight: 500;
   }
+
+  i {
+    font-size: 0.9rem;
+  }
 }
 
-::ng-deep .vehicle-popup {
-  min-width: 220px;
-  font-family: Inter, sans-serif;
-  ;
+/* ===================================
+   TOGGLE SWITCH
+=================================== */
 
-  .popup-header {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: #8b5cf6;
-  }
+::ng-deep .map-controls .p-toggleswitch {
 
-  .popup-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 13px;
-  }
-
+  transform: scale(0.68);
 }
 
+::ng-deep .map-controls .p-toggleswitch-slider,
+::ng-deep .map-controls .p-toggleswitch-handle {
 
+  box-shadow: none !important;
+}
 
-
+/* ===================================
+   LIVE STATUS
+=================================== */
 
 .live-status-bar {
 
   position: absolute;
-  ;
-  right: 1px;
+
+  // top: 1rem;
+
+  right: 1rem;
+
   z-index: 1000;
 
-  width: 400px;
+  max-width: 420px;
 
-  padding: 0.55rem 0.9rem;
+  min-height: 52px;
 
-  margin-bottom: 0.75rem;
+  padding: 0.7rem 1rem;
 
-  border-radius: 14px;
-
-  background:
-    rgba(15, 15, 20, 0.88);
-
-  border:
-    1px solid rgba(255, 255, 255, 0.05);
-
-  backdrop-filter: blur(12px);
-
+  border-radius: 1rem;
 }
 
 .live-text {
 
   color: #22c55e;
 
-  font-size: 0.72rem;
+  font-size: 0.7rem;
 
   font-weight: 700;
 
-  letter-spacing: 0.12rem;
-
+  letter-spacing: 0.18rem;
 }
 
+.live-meta {
+
+  color: #94a3b8;
+
+  font-size: 0.72rem;
+}
+
+.divider {
+
+  width: 4px;
+
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.2);
+}
+
+/* ===================================
+   BOTTOM CONTROLS
+=================================== */
 
 .fleet-controls {
 
@@ -123,43 +193,37 @@
 
   z-index: 1000;
 
-  padding: 0.5rem 0.7rem;
+  padding: 0.45rem 0.55rem;
 
-  border-radius: 18px;
+  border-radius: 1rem;
 
-  background:
-    rgba(12,12,18,0.88);
+  display: flex;
 
-  backdrop-filter: blur(16px);
+  align-items: center;
 
-  border:
-    1px solid rgba(255,255,255,0.05);
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.35);
-
+  gap: 0.45rem;
 }
 
-.live-meta {
+/* ===================================
+   BUTTONS
+=================================== */
 
-  color: #94a3b8;
+::ng-deep .fleet-controls .p-button {
 
-  font-size: 0.72rem;
+  width: 2.35rem;
 
+  height: 2.35rem;
+
+  border-radius: 0.85rem;
+
+  padding: 0;
+
+  box-shadow: none;
 }
 
-.divider {
-
-  width: 3px;
-
-  height: 3px;
-
-  border-radius: 50%;
-
-  background:
-    rgba(255, 255, 255, 0.22);
-
-}
+/* ===================================
+   PULSE
+=================================== */
 
 .pulse-dot {
 
@@ -173,12 +237,9 @@
 
   position: relative;
 
-  box-shadow:
-    0 0 6px #22c55e;
+  box-shadow: 0 0 10px #22c55e;
 
-  animation:
-    pulse 1.5s infinite;
-
+  animation: pulse 1.5s infinite;
 }
 
 .pulse-dot::after {
@@ -191,41 +252,65 @@
 
   border-radius: 50%;
 
-  background:
-    rgba(34, 197, 94, 0.45);
+  background: rgba(34,197,94,0.4);
 
-  animation:
-    ripple 1.5s infinite;
-
+  animation: ripple 1.5s infinite;
 }
 
-
 @keyframes pulse {
-
-  0% {
-    transform: scale(1);
-  }
 
   50% {
     transform: scale(1.15);
   }
-
-  100% {
-    transform: scale(1);
-  }
-
 }
 
 @keyframes ripple {
 
-  0% {
-    transform: scale(1);
-    opacity: 0.7;
-  }
+  to {
 
-  100% {
     transform: scale(2.6);
+
     opacity: 0;
   }
+}
 
+/* ===================================
+   RESPONSIVE
+=================================== */
+
+@media screen and (max-width: 768px) {
+
+  .map-controls {
+
+    width: 180px;
+  }
+
+  .live-status-bar {
+
+    top: auto;
+
+    bottom: 5rem;
+
+    left: 50%;
+
+    right: auto;
+
+    transform: translateX(-50%);
+
+    width: calc(100% - 2rem);
+
+    max-width: 95%;
+  }
+
+  .live-meta {
+
+    display: none;
+  }
+
+  .fleet-controls {
+
+    width: calc(100% - 2rem);
+
+    justify-content: center;
+  }
 }

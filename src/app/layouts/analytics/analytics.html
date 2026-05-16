@@ -1,27 +1,82 @@
-<div class="dashboard surface-ground min-h-screen p-1">
+<div class="dashboard p-2">
+
+  @if (loading) {
+
+  <div class="grid">
+
+    @for (item of [1,2,3,4]; track item) {
+
+    <div class="col-12 md:col-6 xl:col-4">
+
+      <div class="chart-card skeleton-card">
+
+        <div class="skeleton skeleton-title"></div>
+
+        <div class="skeleton skeleton-chart"></div>
+
+      </div>
+
+    </div>
+
+    }
+
+  </div>
+
+  }
+
+  @else {
 
   <div class="grid">
 
     @for (card of dashboardCards; track card.title) {
 
-      <div [class]="card.col">
-        <div class="surface-card border-round-xl shadow-2 chart-card">
+    <div [class]="card.col">
 
-          <div class="text-sm p-2">
-            {{ card.title }}
+      <div class="chart-card" [class.analytics-wide]="card.col.includes('xl:col-6')">
+
+        <!-- HEADER -->
+
+        <div class="card-header">
+
+          <div class="flex align-items-center gap-2">
+
+            <div class="chart-icon">
+              <i [class]="card.icon"></i>
+            </div>
+
+            <div>
+
+              <div class="card-title">
+                {{ card.title }}
+              </div>
+
+              <div class="card-subtitle">
+                Live analytics
+              </div>
+
+            </div>
+
           </div>
 
-          <div
-            echarts
-            [options]="card.chart"
-            class="chart-container"
-          ></div>
+          <button class="menu-btn">
+            <i class="pi pi-ellipsis-v"></i>
+          </button>
 
         </div>
+
+        <!-- CHART -->
+
+        <div echarts [options]="card.chart" class="chart-container">
+        </div>
+
       </div>
+
+    </div>
 
     }
 
   </div>
+
+  }
 
 </div>

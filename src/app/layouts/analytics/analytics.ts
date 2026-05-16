@@ -1,241 +1,437 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject
+} from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-analytics',
   standalone: true,
-  imports: [NgxEchartsModule],
+  imports: [
+    CommonModule,
+    NgxEchartsModule,
+    ButtonModule
+  ],
   templateUrl: './analytics.html',
   styleUrl: './analytics.scss',
 })
-export class Analytics {
+export class Analytics implements OnInit {
 
-  fleetActivityChart = {
+  private http = inject(HttpClient);
 
-    tooltip: {
-      trigger: 'axis'
-    },
+  loading = false;
 
-    legend: {
-      data: [
-        'Trips',
-        'Online'
-      ]
-    },
+  dashboardCards: any[] = [];
 
-    xAxis: {
+  ngOnInit(): void {
+    this.loadDashboard();
+  }
 
-      type: 'category',
+  // =========================
+  // DASHBOARD LOAD
+  // =========================
 
-      data: [
-        'Mon',
-        'Tue',
-        'Wed',
-        'Thu',
-        'Fri',
-        'Sat',
-        'Sun'
-      ]
-    },
+  loadDashboard(): void {
 
-    yAxis: {
-      type: 'value'
-    },
+    // this.loading = true;
 
-    series: [
+    Promise.all([
+      this.getFleetActivity(),
+      this.getVehicleStatus(),
+      this.getAlertsTrend(),
+      this.getTripAnalytics()
+    ])
+      .then(([fleet, vehicle, alerts, trip]) => {
 
+        this.dashboardCards = [
+
+          {
+            title: 'Fleet Activity',
+            chart: fleet,
+            icon: 'pi pi-chart-line',
+            col: 'col-12 xl:col-3'
+          },
+
+          {
+            title: 'Vehicle Status',
+            chart: vehicle,
+            icon: 'pi pi-car',
+            col: 'col-12 md:col-6 xl:col-3'
+          },
+
+          {
+            title: 'Alerts Trend',
+            chart: alerts,
+            icon: 'pi pi-bell',
+            col: 'col-12 md:col-6 xl:col-3'
+          },
+
+          {
+            title: 'Trip Analytics',
+            chart: trip,
+            icon: 'pi pi-compass',
+            col: 'col-12  xl:col-3'
+          }
+        ];
+
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+  }
+
+  // =========================
+  // API CALLS
+  // =========================
+
+  async getFleetActivity(): Promise<any> {
+
+    // Replace with API
+    // return this.http.get('api/fleet-activity').toPromise();
+
+    const response = {
+      days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      trips: [120, 132, 101, 134, 190, 230, 210],
+      online: [80, 82, 79, 88, 91, 95, 98]
+    };
+
+    return this.buildFleetActivityChart(response);
+  }
+
+  async getVehicleStatus(): Promise<any> {
+
+    const response = [
       {
-        name: 'Trips',
+        value: 98,
+        name: 'Online'
+      },
+      {
+        value: 26,
+        name: 'Offline'
+      },
+      {
+        value: 12,
+        name: 'Idle'
+      }
+    ];
 
-        type: 'line',
+    return this.buildVehicleStatusChart(response);
+  }
 
-        smooth: true,
+  async getAlertsTrend(): Promise<any> {
 
-        data: [
-          120,
-          132,
-          101,
-          134,
-          190,
-          230,
-          210
-        ]
+    const response = {
+      days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+      alerts: [5, 20, 36, 10, 15]
+    };
+
+    return this.buildAlertsChart(response);
+  }
+
+  async getTripAnalytics(): Promise<any> {
+
+    const response = {
+      value: [220, 70, 120, 40, 18]
+    };
+
+    return this.buildTripChart(response);
+  }
+
+  // =========================
+  // CHART BUILDERS
+  // =========================
+
+  buildFleetActivityChart(data: any): any {
+
+    return {
+
+      tooltip: {
+        trigger: 'axis',
+        backgroundColor: '#111827',
+        borderWidth: 0,
+        textStyle: {
+          color: '#fff'
+        }
       },
 
-      {
-        name: 'Online',
+      legend: {
+        top: 0,
+        textStyle: {
+          color: '#64748b'
+        }
+      },
 
-        type: 'line',
+      grid: {
+        left: 10,
+        right: 10,
+        top: 50,
+        bottom: 10,
+        containLabel: true
+      },
 
-        smooth: true,
+      xAxis: {
+        type: 'category',
 
-        data: [
-          80,
-          82,
-          79,
-          88,
-          91,
-          95,
-          98
-        ]
-      }
-    ]
-  };
+        boundaryGap: false,
 
+        data: data.days,
 
-  vehicleStatusChart = {
-
-    tooltip: {
-      trigger: 'item'
-    },
-
-    series: [
-
-      {
-        type: 'pie',
-
-        radius: '70%',
-
-        data: [
-
-          {
-            value: 98,
-            name: 'Online'
-          },
-
-          {
-            value: 26,
-            name: 'Offline'
-          },
-
-          {
-            value: 12,
-            name: 'Idle'
+        axisLine: {
+          lineStyle: {
+            color: '#e2e8f0'
           }
-        ]
-      }
-    ]
-  };
+        },
 
+        axisLabel: {
+          color: '#64748b'
+        }
+      },
 
+      yAxis: {
 
+        type: 'value',
 
+        splitLine: {
+          lineStyle: {
+            type: 'dashed',
+            color: '#e2e8f0'
+          }
+        },
 
-  alertsChart = {
+        axisLabel: {
+          color: '#64748b'
+        }
+      },
 
-    xAxis: {
-
-      type: 'category',
-
-      data: [
-        'Mon',
-        'Tue',
-        'Wed',
-        'Thu',
-        'Fri'
-      ]
-    },
-
-    yAxis: {
-      type: 'value'
-    },
-
-    series: [
-
-      {
-        data: [
-          5,
-          20,
-          36,
-          10,
-          15
-        ],
-
-        type: 'bar'
-      }
-    ]
-  };
-
-
-
-
-  tripChart = {
-
-    radar: {
-
-      indicator: [
+      series: [
 
         {
           name: 'Trips',
-          max: 300
+
+          type: 'line',
+
+          smooth: true,
+
+          symbol: 'circle',
+
+          symbolSize: 8,
+
+          areaStyle: {
+            opacity: 0.08
+          },
+
+          emphasis: {
+            focus: 'series'
+          },
+
+          data: data.trips
         },
 
         {
-          name: 'Fuel',
-          max: 100
-        },
+          name: 'Online',
 
-        {
-          name: 'Speed',
-          max: 150
-        },
+          type: 'line',
 
-        {
-          name: 'Idle',
-          max: 80
-        },
+          smooth: true,
 
-        {
-          name: 'Alerts',
-          max: 50
+          symbol: 'circle',
+
+          symbolSize: 8,
+
+          areaStyle: {
+            opacity: 0.08
+          },
+
+          emphasis: {
+            focus: 'series'
+          },
+
+          data: data.online
         }
       ]
-    },
+    };
+  }
 
-    series: [
+  buildVehicleStatusChart(data: any): any {
 
-      {
-        type: 'radar',
+    return {
 
-        data: [
+      tooltip: {
+        trigger: 'item'
+      },
+
+      legend: {
+        bottom: 0
+      },
+
+      series: [
+
+        {
+          type: 'pie',
+
+          radius: ['55%', '78%'],
+
+          avoidLabelOverlap: true,
+
+          itemStyle: {
+            borderRadius: 12,
+            borderColor: '#fff',
+            borderWidth: 4
+          },
+
+          label: {
+            show: true,
+            formatter: '{b}\n{c}'
+          },
+
+          emphasis: {
+            scale: true,
+            scaleSize: 8
+          },
+
+          data
+        }
+      ]
+    };
+  }
+
+  buildAlertsChart(data: any): any {
+
+    return {
+
+      tooltip: {
+        trigger: 'axis'
+      },
+
+      grid: {
+        left: 10,
+        right: 10,
+        top: 20,
+        bottom: 10,
+        containLabel: true
+      },
+
+      xAxis: {
+
+        type: 'category',
+
+        data: data.days,
+
+        axisLabel: {
+          color: '#64748b'
+        }
+      },
+
+      yAxis: {
+
+        type: 'value',
+
+        splitLine: {
+          lineStyle: {
+            type: 'dashed'
+          }
+        },
+
+        axisLabel: {
+          color: '#64748b'
+        }
+      },
+
+      series: [
+
+        {
+          data: data.alerts,
+
+          type: 'bar',
+
+          barWidth: 28,
+
+          borderRadius: [
+            10,
+            10,
+            0,
+            0
+          ]
+        }
+      ]
+    };
+  }
+
+  buildTripChart(data: any): any {
+
+    return {
+
+      tooltip: {},
+
+      radar: {
+
+        radius: '65%',
+
+        splitNumber: 5,
+
+        axisName: {
+          color: '#64748b'
+        },
+
+        indicator: [
 
           {
-            value: [
-              220,
-              70,
-              120,
-              40,
-              18
-            ]
+            name: 'Trips',
+            max: 300
+          },
+
+          {
+            name: 'Fuel',
+            max: 100
+          },
+
+          {
+            name: 'Speed',
+            max: 150
+          },
+
+          {
+            name: 'Idle',
+            max: 80
+          },
+
+          {
+            name: 'Alerts',
+            max: 50
           }
         ]
-      }
-    ]
-  };
+      },
 
-  dashboardCards = [
-  {
-    title: 'Fleet Activity',
-    chart: this.fleetActivityChart,
-    col: 'col-12 lg:col-4'
-  },
-  {
-    title: 'Vehicle Status',
-    chart: this.vehicleStatusChart,
-    col: 'col-12 lg:col-4'
-  },
-  {
-    title: 'Alerts Trend',
-    chart: this.alertsChart,
-    col: 'col-12 lg:col-4'
-  },
-  // {
-  //   title: 'Trip Analytics',
-  //   chart: this.tripChart,
-  //   col: 'col-12 lg:col-4'
-  // }
-];
+      series: [
 
+        {
+          type: 'radar',
 
+          areaStyle: {
+            opacity: 0.2
+          },
 
+          data: [
+            {
+              value: data.value
+            }
+          ]
+        }
+      ]
+    };
+  }
+
+  // =========================
+  // REFRESH
+  // =========================
+
+  refreshDashboard(): void {
+    this.loadDashboard();
+  }
 }
