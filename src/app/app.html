@@ -49,47 +49,63 @@
     </div> -->
 
     <!-- ALERT FEED -->
-    <div class="col-12 xl:col-3">
+   <div class="col-12 xl:col-3">
 
-      <div class="panel threads-panel">
+  <div class="panel threads-panel">
 
-        <div class="flex flex-column gap-2">
+    <div class="flex flex-column gap-2">
 
-          @for (alert of alerts; track alert.id) {
+      @for (alert of alerts; track alert.id) {
 
-          <div class="feed-item">
+      <div class="feed-item">
 
-            <div class="feed-icon" [classList]="alert.type">
+        <div
+          class="feed-icon"
+          [ngClass]="{
+            'danger': alert.type === 'danger',
+            'warning': alert.type === 'warning',
+            'info': alert.type === 'info'
+          }"
+        >
 
-              <i [classList]="alert.icon"></i>
+          <i [class]="alert.icon"></i>
 
-            </div>
+        </div>
 
-            <div class="flex-1">
+        <div class="flex-1 min-w-0">
 
-              <div class="feed-title">
-                {{ alert.title }}
-              </div>
-
-              <div class="feed-subtitle">
-                {{ alert.message }}
-              </div>
-
-            </div>
-
-            <div class="feed-time">
-              {{ alert.time }}
-            </div>
-
+          <div class="feed-title">
+            {{ alert.title }}
           </div>
 
-          }
+          <div class="feed-subtitle">
+            {{ alert.message }}
+          </div>
 
+        </div>
+
+        <div class="feed-time">
+          {{ alert.time }}
         </div>
 
       </div>
 
+      }
+
     </div>
+
+    <p-paginator
+      [rows]="pagination.rows"
+      [first]="pagination.first"
+      [totalRecords]="pagination.totalRecords"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      (onPageChange)="onPageChange($event)"
+    >
+    </p-paginator>
+
+  </div>
+
+</div>
 
   </div>
 
