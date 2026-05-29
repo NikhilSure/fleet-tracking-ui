@@ -4,7 +4,7 @@
   <div class="grid mb-2">
 
     @for (kpi of kpis; track kpi.title) {
-    <div class="col-12 md:col-6 xl:col-3 ">
+    <div class="col-12 md:col-6 xl:col-2 ">
       <app-kpi-card [title]="kpi.title" [value]="kpi.value" [color]="kpi.color" [icon]="kpi.icon">
       </app-kpi-card>
     </div>
@@ -19,7 +19,7 @@
 
     <div class="col-12 xl:col-9 border-round-lg overflow-hidden border-1 map">
       <app-live-map-page></app-live-map-page>
-      </div>
+    </div>
 
     <!-- ANALYTICS -->
     <!-- <div class="col-12 xl:col-8">
@@ -49,68 +49,86 @@
     </div> -->
 
     <!-- ALERT FEED -->
-   <div class="col-12 xl:col-3">
+    <div class="col-12 xl:col-3">
 
-  <div class="panel threads-panel">
+      <div class="panel threads-panel">
 
-    <div class="flex flex-column gap-2">
+        @if (pagination.totalRecords) {
+          <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
+            <div class="flex flex-column gap-2">
+    
+              @for (alert of alerts; track alert.id) {
+    
+              <div class="feed-item">
+    
+                <div class="feed-icon" [ngClass]="{
+                  'danger': alert.type === 'danger',
+                  'warning': alert.type === 'warning',
+                  'info': alert.type === 'info'
+                }">
+    
+                  <i [class]="alert.icon"></i>
+    
+                </div>
+    
+                <div class="flex-1 min-w-0">
+    
+                  <div class="feed-title">
+                    {{ alert.title }}
+                  </div>
+    
+                  <div class="feed-subtitle">
+                    {{ alert.message }}
+                  </div>
+    
+                </div>
+    
+                <div class="flex-column">
+                  <div class="feed-time">
+                    {{ alert.time }}
+                  </div>
+  
+                  <div class="text-sm">
+                    {{alert.vehicleId}}
+                  </div>
+                </div>
+    
+              </div>
+    
+              }
+    
+            </div>
+          </p-scrollPanel>
 
-      @for (alert of alerts; track alert.id) {
+       <div class="paginator-container">
+        <p-paginator
+          [rows]="pagination.rows"
+          [first]="pagination.first"
+          [totalRecords]="pagination.totalRecords"
+          [rowsPerPageOptions]="[5, 10, 20]"
+          (onPageChange)="onPageChange($event)">
+        </p-paginator>
+      </div>
+        } @else {
+        <div class="flex flex-column align-items-center justify-content-center py-6 text-center">
+          <i class="pi pi-bell text-5xl text-400 mb-3"></i>
 
-      <div class="feed-item">
+          <h4 class="m-0 mb-2">No Alerts Available</h4>
 
-        <div
-          class="feed-icon"
-          [ngClass]="{
-            'danger': alert.type === 'danger',
-            'warning': alert.type === 'warning',
-            'info': alert.type === 'info'
-          }"
-        >
-
-          <i [class]="alert.icon"></i>
-
+          <p class="text-500 m-0">
+            There are currently no alerts to display.
+          </p>
         </div>
-
-        <div class="flex-1 min-w-0">
-
-          <div class="feed-title">
-            {{ alert.title }}
-          </div>
-
-          <div class="feed-subtitle">
-            {{ alert.message }}
-          </div>
-
-        </div>
-
-        <div class="feed-time">
-          {{ alert.time }}
-        </div>
+        }
 
       </div>
 
-      }
-
     </div>
-
-    <p-paginator
-      [rows]="pagination.rows"
-      [first]="pagination.first"
-      [totalRecords]="pagination.totalRecords"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      (onPageChange)="onPageChange($event)"
-    >
-    </p-paginator>
-
-  </div>
-
-</div>
 
   </div>
 
   <div class="grid">
-      <div class="col-12 ">
+    <div class="col-12 ">
       <div class="panel threads-panel analytics">
 
         <app-analytics></app-analytics>

@@ -6,10 +6,19 @@ import { LiveMapPage } from "./layouts/live-map-page/live-map-page";
 import { HttpClient } from '@angular/common/http';
 import { PaginatorModule } from 'primeng/paginator';
 import { CommonModule } from '@angular/common';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+interface DashboardSummary {
+  activeVehicles: number;
+  onlineVehicles: number;
+  offlineVehicles: number;
+  totalAlerts: number;
+  averageSpeed: number;
+  lowFuelVehicles: number;
+}
 
 @Component({
   selector: 'app-root',
-  imports: [KpiCard, Analytics, LiveMapPage, PaginatorModule, CommonModule],
+  imports: [KpiCard,  Analytics, LiveMapPage, PaginatorModule, CommonModule, ScrollPanelModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -17,33 +26,13 @@ export class App {
   protected readonly title = signal('fleet-tracking-ui');
 
 
-  protected readonly kpis = [
-    {
-      title: 'Total Vehicles',
-      value: 120,
-      color: 'blue',
-      icon: 'pi pi-car'
-    },
-    {
-      title: 'Active Vehicles',
-      value: 95,
-      color: 'green',
-      icon: 'pi pi-check'
-    },
-    {
-      title: 'Inactive Vehicles',
-      value: 25,
-      color: 'red',
-      icon: 'pi pi-times'
-    }
-  ]
-
+  protected kpis:any = [];
   alerts: any[] = [];
   allAlerts: any[] = [];
 
   pagination: any = {
     totalRecords: 0,
-    rows: 5,
+    rows: 10,
     first: 0,
     loading: false
   };
@@ -52,9 +41,10 @@ export class App {
 
   ngOnInit(): void {
     this.getAlerts();
+    this.loadDashboardSummary();
   }
 
-  getAlerts(page: number = 0, size: number = 5): void {
+  getAlerts(page: number = 0, size: number = 20): void {
     this.pagination.loading = true;
 
     this.http
@@ -134,22 +124,22 @@ export class App {
   getAlertTitle(type: string): string {
     switch (type) {
 
-      case 'OVER_SPEED':
+      case 'OVERSPEED':
         return 'Overspeed Alert';
 
-      case 'ENGINE_OFF':
+      case 'ENGINEOFF':
         return 'Engine Off Alert';
 
-      case 'ENGINE_ON':
+      case 'ENGINEON':
         return 'Engine On Alert';
 
-      case 'GEOFENCE_EXIT':
+      case 'GEOFENCEEXIT':
         return 'Geofence Exit';
 
-      case 'ROUTE_DEVIATION':
+      case 'ROUTEDEVIATION':
         return 'Route Deviation';
 
-      case 'VEHICLE_IDLE':
+      case 'VEHICLEIDLE':
         return 'Vehicle Idle';
 
       default:
@@ -225,4 +215,52 @@ export class App {
 
     return 'Just now';
   }
+
+  private loadDashboardSummary(): void {
+  this.http.get(`http://localhost:8070/api/analytics/kpi`).subscribe({
+    next: (response: any) => {
+      const data: DashboardSummary = response.data;
+
+      this.kpis = [
+        {
+          title: 'Active Vehicles',
+          value: data.activeVehicles,
+          color: 'green',
+          icon: 'pi pi-car'
+        },
+        {
+          title: 'Online Vehicles',
+          value: data.onlineVehicles,
+          color: 'blue',
+          icon: 'pi pi-wifi'
+        },
+        {
+          title: 'Offline Vehicles',
+          value: data.offlineVehicles,
+          color: 'red',
+          icon: 'pi pi-times-circle'
+        },
+        {
+          title: 'Total Alerts',
+          value: data.totalAlerts,
+          color: 'orange',
+          icon: 'pi pi-bell'
+        },
+        {
+          title: 'Average Speed',
+          value: data.averageSpeed.toFixed(1),
+          color: 'purple',
+          icon: 'pi pi-gauge'
+        },
+        {
+          title: 'Low Fuel Vehicles',
+          value: data.lowFuelVehicles,
+          color: 'yellow',
+          icon: 'pi pi-exclamation-triangle'
+        }
+      ];
+      this.cdr.detectChanges();
+    }
+  });
+}
 }

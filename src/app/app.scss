@@ -107,3 +107,24 @@
 .analytics {
   height: 100px !important;
 }
+
+
+.paginator-container {
+  margin-top: 0.75rem;
+}
+
+:host ::ng-deep .p-paginator {
+  padding: 0.5rem;
+  border: none;
+  background: transparent;
+  justify-content: center;
+}
+
+:host ::ng-deep .p-paginator-pages .p-paginator-page,
+:host ::ng-deep .p-paginator-next,
+:host ::ng-deep .p-paginator-prev,
+:host ::ng-deep .p-paginator-first,
+:host ::ng-deep .p-paginator-last {
+  min-width: 2rem;
+  height: 2rem;
+}
